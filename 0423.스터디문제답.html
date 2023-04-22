@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+  </head>
+  <body>
+    <script>
+      //   1. 생성자
+      //   생성자는 객체를 만들 때 new 연산자를 사용한다
+      //   이러한 생성자 객체는 프로퍼티와 메서드를 공유할수 있다
+      //   생성자 함수는 대문자로 시작해야 한다
+      //   생성자 함수는 return 이 없어도 자동적으로 생성하고 반환한다 = 인스턴스
+
+      function NewFactory(name) {
+        this.name = name;
+        this.sayYourName = function () {
+          console.log(`삐리비리. 제 이름은 ${this.name}입니다. 주인님. `);
+        };
+      }
+      // 생성자 함수 앞에 new 연산자가 사용되면 함수안의 this는 생성자가 만들어낸 객체 즉, 인스턴스를 참조
+      // 즉 this가 myName를 myName2를 myName3를 ... 이런식으로 대상이 바뀌면서 가르키게 된다
+
+      // 인스턴스를 두개 만들어서 name을 출력해보고, 두개의 인스턴스를 비교해보자
+      const bot1 = new NewFactory('지인');
+      const bot2 = new NewFactory('지인');
+
+      bot1.name;
+      // '지인';
+      bot2.name;
+      // '지인';
+
+      //   // bot1 == bot2 -> false
+
+      // prototype
+      // 2.음식 이름의 배열을 전달하면 배열안에서 랜덤하게 메뉴를 뽑아내는 기능을 가진 로봇객체의 생성자를 만들어보자
+      function FoodPicker(foodNames) {
+        // 생성자 함수 정의
+        this.name = foodNames; // this가 인스턴스를 가르키게 되어 name 이라는 프로퍼티를 가지게 된다
+      }
+
+      FoodPicker.prototype.sayMenu = function () {
+        //sayMenu라는 프로토타입 메서드를 FoodPicker 생성자 함수의 프로토타입에 추가
+        console.log(
+          `삐리리리리 오늘의 메뉴는 ${
+            this.name[Math.floor(Math.random() * this.name.length)] // 배열의 갯수를 곱함
+            // 0,1,2 중의 하나인 정수값을 배열의 인덱스로 사용하여  this.name  배열에서 랜덤하게 요소를 선택
+          } 입니다. ` // this.name은 foodNames이기 때문에 []로 접근한다.
+        );
+      };
+
+      // 각 객체는  name  프로퍼티가  ['짜장면', '청국장', '김치찌개'] 인   FoodPicker의 인스턴스이다
+      const robot1 = new FoodPicker(['짜장면', '청국장', '김치찌개']); // 인스턴스가 새로 생길때마다 새로운 함수가 생겨난다
+      const robot2 = new FoodPicker(['짜장면', '청국장', '김치찌개']);
+
+      robot1.sayMenu(); // 오늘의 메뉴는 김치찌개 입니다
+      robot2.sayMenu(); // 오늘의 메뉴는 짜장면 입니다
+
+      //robot1 == robot2 -> false
+
+      //3.  prototype,  __proto__
+
+      // https://www.howdy-mj.me/javascript/prototype-and-proto
+
+      // prototype
+      //  JavaScript에서 생성자 함수로 객체를 생성할 때,
+      // 그 생성자 함수에는  .prototype  이라는 프로퍼티가 있습니다.
+      // 모든 객체는 [[Prototype]]이라는 내부 슬롯을 가집니다.
+
+      // [[Prototype]] 직접 접근이 불가하다 -> __proto__ 프로퍼티로만 접근가능.
+      //   __proto__ 는 객체의 프로토타입을 나타내는 내부 프로퍼티입니다.
+      // 모든 객체는  __proto__  프로퍼티를 가지며, 이를 통해 객체가
+      // 상속받은 메서드와 프로퍼티에 접근할수 있습니다
+
+      function Jeein() {
+        this.age = 18;
+      }
+
+      Jeein.prototype.name = '지인'; // 함수에는 프로토타입(prototype)이라는 프로퍼티(name)가 있다
+      const jeein1 = new Jeein();
+      const jeein2 = new Jeein();
+      const jeein3 = new Jeein();
+
+      // jeein1 은  jeein.prototype  객체를
+      //  상속받기 때문에,  jeein1.__proto__ 는  jeein.prototype  객체를 참조한다
+
+      // __proto__ 프로퍼티 로 name 을 새 할당하여 출력하시오
+      // jeein2 에도 어떻게 출력되는지 확인하기
+      jeein1.__proto__.name = 'ss';
+      // 'ss'
+      jeein2.__proto__.name; // jeein2 도 같은 객체 참조
+      //'ss';
+
+      // prototype는 함수에 있고 프로토 프로퍼티(__proto__)는 인스턴스에 있다
+      // jeein1.__proto__ === Jeein.prototype; // true
+
+      //4. class 상속
+      class Sausage {
+        constructor(el1, el2) {
+          // constructor : JavaScript에서 객체를 생성하고 초기화하는 메서드, 인자를 전달-> 초기화 한다
+          // constructor메서드를 통해 inside1, inside2를 초기화하고  taste 메서드를 정의한다
+          this.inside1 = el1; // this가 바라보는것은 클래스를 통해 만들어진 인스턴스를 바라본다
+          this.inside2 = el2;
+        }
+
+        taste() {
+          console.log(
+            `${this.inside1}맛과 ${this.inside2}맛이 나는 소세지다!!`
+          );
+        }
+      }
+
+      class FireSausage extends Sausage {
+        // Sausage 를 상속받는 FireSausage 정의함
+        constructor(el1, el2, el3) {
+          super(el1, el2); // 이것이 위의 생성자 함수 , super 키워드를 사용하여 부모 클래스의 constructor 메서드를 호출 가능
+          this.inside3 = el3;
+        }
+
+        // 오버라이딩 - 자식 클래스에서 부모 클래스의 메서드를 오버라이딩하면, 부모 클래스에서 정의한 메서드 대신 자식 클래스에서 정의한 메서드가 호출
+        // 위의 taste()가 또 있지만 자식에서 생성한 메소드 taste()가 덮어씌어져 실행된다 //
+        taste(el1) {
+          // 인자 el1은 선택적으로 전달될 수 있는데 이인자 값이 true일 경우
+          //  inside1, inside2, inside3 프로퍼티 값 모두를 조합하여 소세지의 맛을 출력
+          if (el1) {
+            console.log(
+              `${this.inside1}맛과 ${this.inside2}맛과 ${this.inside3}맛이 나는 소세지다!!`
+            );
+          } else {
+          }
+        }
+      }
+
+      const fireSausage = new FireSausage('파맛', '불맛', '키위맛');
+      console.log(fireSausage); // FireSausage {inside1: '파맛', inside2: '불맛', inside3: '키위맛'}
+      const mySausage = new Sausage('선지', '해장국');
+      console.log(mySausage); //Sausage {inside1: '선지', inside2: '해장국'}
+
+      //5 .비공개(private) 프로퍼티
+
+      class Robot {
+        #password; // private 프로퍼티를 정의하는 방법 중 하나이다 #를 붙이면 클래스 내에서만 접근 가능
+
+        constructor(name, pw) {
+          this.name = name;
+          this.#password = pw;
+        }
+
+        sayYourName() {
+          // 메서드 정의
+          console.log(`제 이름은 ${this.name}입니다.`);
+        }
+
+        getPassword() {
+          //  #password 프로퍼티의 값을 반환
+          return this.#password;
+        }
+
+        setPassword(pw) {
+          //#password 프로퍼티의 값을 변경
+          this.#password = pw;
+        }
+      }
+
+      const myBot = new Robot('jeein', '1234');
+      console.log(myBot); // Robot {name: 'jeein', #password: '1234'}
+    </script>
+  </body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+  </head>
+  <body>
+    <script>
+      // 1.
+      function NewFactory(name) {
+        this.name = name;
+        this.sayYourName = function () {
+          console.log(`삐리비리. 제 이름은 ${this.name}입니다. 주인님. `);
+        };
+      }
+
+      // 인스턴스를 두개 만들어서 name을 출력해보고, 두개의 인스턴스를 비교해보자
+
+      // 2. prototype
+
+      function FoodPicker(foodNames) {
+        this.name = foodNames;
+      }
+
+
+      // 랜덤으로 메뉴 출력하기
+      // 괄호 안을 작성해보시오
+      ().().() = function () {
+        console.log(
+          `삐리리리리 오늘의 메뉴는 ${
+            this.name[().()(Math.random() * ().().())]  // 괄호 안을 작성해보시오
+          } 입니다. `
+        );
+      };
+
+      const robot1 = new FoodPicker(['짜장면', '청국장', '김치찌개']);
+      const robot2 = new FoodPicker(['짜장면', '청국장', '김치찌개']);
+
+
+
+
+      //3.  prototype,  __proto__
+      function Jeein() {
+        this.age = 18;
+      }
+
+      Jeein.prototype.name = '지인';
+      const jeein1 = new Jeein();
+      const jeein2 = new Jeein();
+      const jeein3 = new Jeein();
+
+      // 변수 jeein1 에 __proto__ 프로퍼티 로 name 을 새 할당하여 출력하시오
+      // 변수 jeein2 도 어떻게 출력되는지 확인하기
+
+      //4. class 상속
+      class Sausage {
+        constructor(el1, el2) {
+          this.inside1 = el1;
+          this.inside2 = el2;
+        }
+
+        taste() {
+          console.log(
+            `${this.inside1}맛과 ${this.inside2}맛이 나는 소세지다!!`
+          );
+        }
+      }
+
+      // 괄호 안을 작성하시오
+      class () () () {
+
+        constructor(el1, el2, el3) {
+          ()(el1, el2);  // 괄호 안을 작성하시오
+          this.inside3 = el3;
+        }
+
+
+        taste(el1) {
+          if (el1) {
+            console.log(
+              `${this.inside1}맛과 ${this.inside2}맛과 ${this.inside3}맛이 나는 소세지다!!`
+            );
+          } else {
+          }
+        }
+      }
+
+      const fireSausage = new FireSausage('파맛', '불맛', '키위맛');
+      console.log(fireSausage);
+      const mySausage = new Sausage('선지', '해장국');
+      console.log(mySausage);
+
+      //5 .비공개(private) 프로퍼티
+
+      class Robot {
+        #password;
+
+        constructor(name, pw) {
+          this.name = name;
+          this.#password = pw;
+        }
+
+        sayYourName() {
+          console.log(`제 이름은 ${this.name}입니다.`);
+        }
+
+        // 괄호 안을 작성하시오
+        ()() {
+          return this.#password;
+        }
+
+        // 괄호 안을 작성하시오
+        ()(pw) {
+          this.#password = pw;
+        }
+      }
+
+      const myBot = new Robot('jeein', '1234');
+      console.log(myBot);
+    </script>
+  </body>
+</html>
